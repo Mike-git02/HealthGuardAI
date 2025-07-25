@@ -1,45 +1,36 @@
-from datetime import datetime
+# health_monitor.py
 
-def health_advice(data):
-    print("🧠 HealthMate says:\n")
+def get_health_response(user_input):
+    user_input = user_input.strip().lower()
 
-    if data["heart_rate"] > 100:
-        print("⚠️ Your heart rate is a bit high. Please rest and hydrate.")
-    elif data["heart_rate"] < 60:
-        print("⚠️ Your heart rate is below normal. Monitor it closely.")
-    else:
-        print("✅ Your heart rate looks good.")
+    if user_input in ['exit', 'quit']:
+        return "👋 Take care of your health! Goodbye!"
 
-    if data["temperature"] > 37.5:
-        print("🌡️ You have a fever. Consider seeing a doctor.")
-    elif data["temperature"] < 36.0:
-        print("❄️ Body temperature is low. Keep warm and check again.")
-    else:
-        print("✅ Temperature is within the healthy range.")
+    keywords = {
+        "sleep": ["sleep", "rest", "nap", "tired", "fatigue", "can't sleep", "insomnia", "bedtime"],
+        "nutrition": ["nutrition", "food", "diet", "eat", "meal", "snack", "healthy eating", "what to eat", "fruits", "vegetables"],
+        "exercise": ["exercise", "workout", "fitness", "activity", "gym", "training", "move", "jog", "walk", "burn calories"],
+        "stress": ["stress", "anxiety", "tension", "relax", "calm", "panic", "overwhelmed", "pressured", "burnout"],
+        "hydration": ["water", "drink", "hydration", "thirst", "fluids", "dehydrated", "how much water"],
+        "mental_health": ["mental health", "mind", "wellbeing", "emotions", "depression", "sad", "happy", "feeling down", "mental state"],
+        "disclaimer": ["disclaimer", "medical", "doctor", "diagnosis", "serious", "hospital", "emergency"]
+    }
 
-    if data["steps_today"] < 4000:
-        print("🚶 Try to move around more today for better health.")
-    elif data["steps_today"] > 8000:
-        print("🏆 Excellent activity level today!")
-    else:
-        print("✅ You're on track with your steps!")
+    for category, words in keywords.items():
+        if any(word in user_input for word in words):
+            if category == "sleep":
+                return "😴 Try getting 7–9 hours of sleep. Good sleep boosts immunity and memory."
+            elif category == "nutrition":
+                return "🥗 Eat balanced meals with veggies, fruits, whole grains, and proteins."
+            elif category == "exercise":
+                return "🏃 Move your body! A 30-minute walk or workout daily is a good start."
+            elif category == "stress":
+                return "🧘 Practice deep breathing or journaling. Avoid burnout by pacing yourself."
+            elif category == "hydration":
+                return "💧 Keep sipping water—at least 6–8 glasses a day is recommended."
+            elif category == "mental_health":
+                return "💬 Mental health matters. Rest, talk to loved ones, and seek support if needed."
+            elif category == "disclaimer":
+                return "⚠️ I’m not a doctor. For medical advice, please consult a professional."
 
-    if data["sleep_hours"] < 6:
-        print("😴 You need more rest. Aim for at least 6–8 hours.")
-    elif data["sleep_hours"] > 9:
-        print("💤 Oversleeping isn't ideal either. Try balancing your sleep.")
-    else:
-        print("✅ Great sleep routine!")
-
-    print("\n📅 Advice generated on:", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-    print("\n🔔 Reminder: This is not medical advice. Consult a doctor if symptoms persist.")
-
-# Example usage
-user_data = {
-    "heart_rate": 105,
-    "temperature": 38.2,
-    "steps_today": 2500,
-    "sleep_hours": 5
-}
-
-health_advice(user_data)
+    return "🤖 I’m still learning. Try asking about sleep, nutrition, exercise, or stress."
